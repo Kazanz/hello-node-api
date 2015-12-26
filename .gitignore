@@ -1,0 +1,9 @@
+.bundle
+.vagrant
+.otto
+.otto*
+node_modules
+dist
+
+# Delete this later.
+BLUEPRINT.md

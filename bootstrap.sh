@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# update packages
+apt-get update
+apt-get upgrade
+
+# redis
+add-apt-repository -y ppa:chris-lea/redis-server
+apt-get update
+apt-get install -y redis-server
+
+# setup redis
+sed -i 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/redis/redis.conf
+/etc/init.d/redis-server restart
+
+sudo apt-get install nodejs
+sudo apt-get install npm

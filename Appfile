@@ -1,0 +1,22 @@
+application {
+    name = "warlords-4015"
+    type = "custom"
+}
+
+project {
+    name = "warlords-4015"
+    infrastructure = "warlords-4015"
+}
+
+
+infrastructure "warlords-4015" {
+    type = "aws"
+    flavor = "simple"
+}
+
+customization "dev-dep" {
+   vagrantfile = "./Vagrantfile"
+}
+
+
+
