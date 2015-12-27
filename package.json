@@ -9,7 +9,12 @@
   "author": "Zach Kazanski (kazanski.zachary@gmail.com)",
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",
-    "express": "^4.13.3"
+    "body-parser": "^1.14.2",
+    "colors": "^1.1.2",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6",
+    "orm": "^2.1.29"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

@@ -4,7 +4,7 @@ var nodemon = require('gulp-nodemon');
 
 
 var babel = function () {
-  return gulp.src('src/app.js')
+  return gulp.src('src/server.js')
       .pipe(babel({
           presets: ['es2015']
       }))
@@ -15,7 +15,7 @@ gulp.task('babel', babel);
 
 gulp.task('default', function () {
   nodemon({
-      script: 'dist/app.js',
+      script: 'dist/server.js',
       ext: 'js',
       env: { 'NODE_ENV': 'development' }
   }).on('restart', function() {
