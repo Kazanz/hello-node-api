@@ -4,8 +4,7 @@ var settings = require('../../config/settings');
 var connection = null;
 
 function setup(db, cb) {
-  require('./message')(orm, db);
-  require('./comment')(orm, db);
+  require('./characters')(orm, db);
 
   return cb(null, db);
 }
