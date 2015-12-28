@@ -1,36 +1,48 @@
-var moment = require('moment');
+var moment = require('moment'),
+    helpers = require('./_helpers'),
+    validators = require('./validators');
 
 module.exports = function (orm, db) {
-  var textval = [
-    orm.enforce.ranges.length(1, undefined, "must be atleast 1 letter long"),
-    orm.enforce.ranges.length(undefined, 50, "cannot be longer than 50 letters")
-  ];
-
-  var Character = db.define('character', {
+  var character_fields = {
     name      : { type: 'text', required: true },
     race      : { type: 'text', required: true },
     calling   : { type: 'text', required: true },
     createdAt : { type: 'date', required: true, time: true }
-  },
-  {
+  };
+  db.define('character', character_fields, {
     hooks: {
       beforeValidation: function () {
         this.createdAt = new Date();
       }
     },
     validations: {
-      name    : textval,
-      race    : textval,
-      calling : textval
+      name    : validators.length(50),
+      race    : validators.length(50),
+      calling : validators.length(50)
     },
     methods: {
       serialize: function () {
-        return {
-          id        : this.id,
-          title     : this.name,
-          body      : this.calling,
-          createdAt : moment(this.createdAt).fromNow(),
-        };
+        return helpers.serialize.call(this, character_fields);
+      }
+    }
+  });
+
+  var race_fields = { name: { type: 'text', required: true } }
+  db.define('race', race_fields, {
+    validations: { name: validators.length(50) },
+    methods: {
+      serialize: function() {
+        return helpers.serialize.call(this, race_fields);
+      }
+    }
+  });
+
+  var calling_fields = { name: { type: 'text', required: true } }
+  db.define('calling', calling_fields, {
+    validations: { name: validators.length(50) },
+    methods: {
+      serialize: function() {
+        return helpers.serialize.call(this, calling_fields);
       }
     }
   });

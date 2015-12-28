@@ -1,8 +1,8 @@
 var orm     = require('orm');
 
 module.exports = {
-  get: function (req, res, next) {
-    req.models.message.find().limit(4).order('-id').all(function (err, messages) {
+  all: (req, res, next) => {
+    req.models.character.find().limit(4).order('-id').all(function (err, messages) {
       if (err) return next(err);
 
       var items = messages.map(function (m) {
@@ -12,11 +12,10 @@ module.exports = {
       res.send({ items: items });
     });
   },
-  create: function (req, res, next) {
-    // var params = _.pick(req.body, 'title', 'body');
-    var params = {"name": "bob", "race": "human", "calling": "Hacker"}
+  create: (req, res, next) => {
+    var params = _.pick(req.body, 'title', 'body');
 
-    req.models.message.create(params, function (err, message) {
+    req.models.character.create(params, function (err, message) {
       if(err) {
         if(Array.isArray(err)) {
           return res.send(200, { errors: helpers.formatErrors(err) });
