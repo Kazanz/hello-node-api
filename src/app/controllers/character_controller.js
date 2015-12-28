@@ -1,8 +1,10 @@
-var orm     = require('orm');
+var _       = require('lodash'),
+    orm     = require('orm'),
+    helpers = require('./_helpers');
 
 module.exports = {
   all: (req, res, next) => {
-    req.models.character.find().limit(4).order('-id').all(function (err, messages) {
+    req.models.character.find().limit(20).order('-id').all(function (err, messages) {
       if (err) return next(err);
 
       var items = messages.map(function (m) {
@@ -12,19 +14,13 @@ module.exports = {
       res.send({ items: items });
     });
   },
+
   create: (req, res, next) => {
-    var params = _.pick(req.body, 'title', 'body');
-
-    req.models.character.create(params, function (err, message) {
-      if(err) {
-        if(Array.isArray(err)) {
-          return res.send(200, { errors: helpers.formatErrors(err) });
-        } else {
-          return next(err);
-        }
-      }
-
-      return res.send(200, message.serialize());
+    let character = req.models.character;
+    let params = _.pick(req.json || req.body, character.fields);
+    character.create(params, function (err, obj) {
+        var form = new helpers.ModelForm(err, obj, res, next);
+        return form.evaluate();
     });
   }
 };

@@ -23,6 +23,9 @@ module.exports = function (orm, db) {
     methods: {
       serialize: function () {
         return helpers.serialize.call(this, character_fields);
+      },
+      fields: function () {
+          return Object.keys(character_fields)
       }
     }
   });

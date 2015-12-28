@@ -5,7 +5,6 @@ var connection = null;
 
 function setup(db, cb) {
   require('./characters')(orm, db);
-
   return cb(null, db);
 }
 
